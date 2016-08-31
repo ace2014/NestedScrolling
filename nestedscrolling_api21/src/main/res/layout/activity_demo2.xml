@@ -14,12 +14,13 @@
         android:id="@+id/rv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#cecece"
         android:nestedScrollingEnabled="true" />
 
     <RelativeLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="220dp"
+        android:layout_height="160dp"
         android:background="#3e3e3e">
 
         <ImageView

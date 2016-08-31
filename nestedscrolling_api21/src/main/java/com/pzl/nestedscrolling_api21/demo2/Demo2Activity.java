@@ -2,6 +2,7 @@ package com.pzl.nestedscrolling_api21.demo2;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MotionEvent;
@@ -26,6 +27,7 @@ public class Demo2Activity extends AppCompatActivity {
 
     private void initView() {
         rv = (RecyclerView) findViewById(R.id.rv);
+        rv.setLayoutManager(new LinearLayoutManager(this));
         Adapter adapter = new Adapter();
         rv.setAdapter(adapter);
 

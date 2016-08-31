@@ -25,9 +25,12 @@ import com.pzl.nestedscrolling_api21.R;
 
 public class MyRelativeLayout extends RelativeLayout {
     String TAG = "NestedRelativeLayout";
-    int current = 0;
-    int old = 0;
-    int offset = 0;
+    int currentRv = 0;
+    int oldRv = 0;
+    int offsetRv = 0;
+    int currentContainer = 0;
+    int oldContainer = 0;
+    int offsetContainer = 0;
     RelativeLayout container;
     RecyclerView rv;
     int maxTopContainer;
@@ -73,7 +76,7 @@ public class MyRelativeLayout extends RelativeLayout {
     public void onNestedScroll(View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed) {
         Log.i(TAG, "dyUnconsumed=" + dyUnconsumed + ",dyConsumed=" + dyConsumed);
 
-      /*  int dy = 0;
+        int dy = 0;
 
         if (dyUnconsumed < 0 && dyConsumed == 0) {//已经在顶部状态，向下滑动
             dy = dyUnconsumed;
@@ -89,24 +92,38 @@ public class MyRelativeLayout extends RelativeLayout {
             dy = dyUnconsumed;
         }
 
-
-        Log.i(TAG, "dy=" + dy);
-*/
-
-      /*  ViewGroup.LayoutParams lp_tlTop = container.getLayoutParams();
-        lp_tlTop.height = current;
-        requestLayout();*/
-
-        /*current -= dy;
-        if (current - old > 0) {
-            offset = 0;
-        } else if (current - old < -maxTopContainer) {
-            offset = -maxTopContainer;
+        /**
+         * 边界判断
+         */
+        if (currentRv - dy > maxTopContainer) {
+            currentRv = maxTopContainer;
+        } else if (currentRv - dy < 0) {
+            currentRv = 0;
         } else {
-            offset = current - old;
-            old = current;
-        }*/
+            currentRv -= dy;
+        }
 
+
+        offsetRv = currentRv - oldRv;
+        rv.offsetTopAndBottom(offsetRv);
+        oldRv = currentRv;
+
+
+        /**
+         * 边界判断
+         */
+        if (currentContainer - dy > maxTopContainer) {
+            currentContainer = maxTopContainer;
+        } else if (currentContainer - dy < 0) {
+            currentContainer = 0;
+        } else {
+            currentContainer -= dy;
+        }
+
+
+        offsetContainer = currentContainer - oldContainer;
+        container.offsetTopAndBottom(offsetContainer);
+        oldContainer = currentContainer;
 
     }
 
@@ -122,6 +139,7 @@ public class MyRelativeLayout extends RelativeLayout {
      */
     @Override
     public void onNestedPreScroll(View target, int dx, int dy, int[] consumed) {
+        //rv
     }
 
     @Override
@@ -146,5 +164,7 @@ public class MyRelativeLayout extends RelativeLayout {
         rv = (RecyclerView) findViewById(R.id.rv);
         container.measure(MeasureSpec.UNSPECIFIED, MeasureSpec.UNSPECIFIED);
         maxTopContainer = container.getMeasuredHeight();
+        currentContainer = maxTopContainer;
+        oldContainer = maxTopContainer;
     }
 }

@@ -22,7 +22,6 @@ public class Adapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        Log.d(TAG, "onBindViewHolder-position:" + position);
         ((MyViewHolder) holder).tv.setText(String.valueOf((char) (65 + position)));
     }
 
