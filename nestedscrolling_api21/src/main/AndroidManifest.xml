@@ -29,6 +29,10 @@
         <activity
             android:name=".demo3.Demo3Activity"
             android:label="@string/title_activity_demo3"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".demo4.Demo4Activity"
+            android:label="@string/title_activity_demo4"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

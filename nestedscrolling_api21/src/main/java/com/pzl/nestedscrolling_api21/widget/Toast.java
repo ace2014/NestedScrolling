@@ -1,4 +1,4 @@
-package com.pzl.nestedscrolling_api21;
+package com.pzl.nestedscrolling_api21.widget;
 
 import android.content.Context;
 
