@@ -1,7 +1,6 @@
-package com.pzl.nestedscrolling_api21.demo2;
+package com.pzl.nestedscrolling_api21.demo3;
 
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +10,7 @@ import android.widget.TextView;
  * @author zl.peng
  * @version [1.0, 2016-08-31]
  */
-public class Adapter extends RecyclerView.Adapter {
+public class RvAdapter extends RecyclerView.Adapter {
     private static final String TAG = "PagerAdapter";
 
     @Override

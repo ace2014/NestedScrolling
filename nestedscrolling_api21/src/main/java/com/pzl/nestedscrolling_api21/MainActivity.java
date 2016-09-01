@@ -8,6 +8,7 @@ import android.view.View;
 
 import com.pzl.nestedscrolling_api21.demo1.Demo1Activity;
 import com.pzl.nestedscrolling_api21.demo2.Demo2Activity;
+import com.pzl.nestedscrolling_api21.demo3.Demo3Activity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,6 +29,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.btn2:
                 i.setClass(this, Demo2Activity.class);
+                break;
+            case R.id.btn3:
+                i.setClass(this, Demo3Activity.class);
                 break;
         }
         startActivity(i);

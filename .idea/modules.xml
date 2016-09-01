@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ProjectModuleManager">
-    <modules>
-      <module fileurl="file://$PROJECT_DIR$/NestedScrolling.iml" filepath="$PROJECT_DIR$/NestedScrolling.iml" />
-      <module fileurl="file://$PROJECT_DIR$/nestedscrolling_api21/nestedscrolling_api21.iml" filepath="$PROJECT_DIR$/nestedscrolling_api21/nestedscrolling_api21.iml" />
-      <module fileurl="file://$PROJECT_DIR$/nestedscrolling_lowapi/nestedscrolling_lowapi.iml" filepath="$PROJECT_DIR$/nestedscrolling_lowapi/nestedscrolling_lowapi.iml" />
-    </modules>
+    <modules />
   </component>
 </project>

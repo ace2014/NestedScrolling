@@ -1,21 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.pzl.nestedscrolling_api21.demo2.MyRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.pzl.nestedscrolling_api21.demo2.MyLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+    android:orientation="vertical"
     tools:context="com.pzl.nestedscrolling_api21.demo2.Demo2Activity">
-
-    <!--
-      api 23 的 listview 在 patentview 里 onNestedScroll 中间滚动时没有回调，为什么，bug吗
-    -->
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#cecece"
-        android:nestedScrollingEnabled="true" />
 
     <RelativeLayout
         android:id="@+id/container"
@@ -43,4 +34,14 @@
             android:textColor="#636363"
             android:textSize="22sp" />
     </RelativeLayout>
-</com.pzl.nestedscrolling_api21.demo2.MyRelativeLayout>
+
+    <!--
+    api 23 的 listview 在 patentview 里 onNestedScroll 中间滚动时没有回调，为什么，bug吗
+    -->
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#cecece"
+        android:nestedScrollingEnabled="true" />
+</com.pzl.nestedscrolling_api21.demo2.MyLinearLayout>

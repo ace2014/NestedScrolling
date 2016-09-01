@@ -1,10 +1,13 @@
 package com.pzl.nestedscrolling_api21.demo2;
 
 import android.content.Context;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.pzl.nestedscrolling_api21.R;
@@ -23,27 +26,21 @@ import com.pzl.nestedscrolling_api21.R;
  * 若要兼容所有api 请使用支持包里的recycleview,nestedscrollview；
  */
 
-public class MyRelativeLayout extends RelativeLayout {
-    String TAG = "NestedRelativeLayout";
-    int currentRv = 0;
-    int oldRv = 0;
-    int offsetRv = 0;
-    int currentContainer = 0;
-    int oldContainer = 0;
-    int offsetContainer = 0;
+public class MyLinearLayout extends LinearLayout {
+    String TAG = "MyLinearLayout";
     RelativeLayout container;
     RecyclerView rv;
     int maxTopContainer;
 
-    public MyRelativeLayout(Context context) {
+    public MyLinearLayout(Context context) {
         this(context, null);
     }
 
-    public MyRelativeLayout(Context context, AttributeSet attrs) {
+    public MyLinearLayout(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public MyRelativeLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+    public MyLinearLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
@@ -76,54 +73,6 @@ public class MyRelativeLayout extends RelativeLayout {
     public void onNestedScroll(View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed) {
         Log.i(TAG, "dyUnconsumed=" + dyUnconsumed + ",dyConsumed=" + dyConsumed);
 
-        int dy = 0;
-
-        if (dyUnconsumed < 0 && dyConsumed == 0) {//已经在顶部状态，向下滑动
-            dy = dyUnconsumed;
-        } else if (dyUnconsumed > 0 && dyConsumed == 0) {//已经在底部状态，向上滑动
-            dy = dyUnconsumed;
-        } else if (dyUnconsumed == 0 && dyConsumed < 0) {//中间状态，向下滑动
-            dy = dyConsumed;
-        } else if (dyUnconsumed == 0 && dyConsumed > 0) {//中间状态，向上滑动
-            dy = dyConsumed;
-        } else if (dyUnconsumed > 0 && dyConsumed > 0) { //状态=离滑动到底端还有小段距离，小段距离<moveUnit;向上滑的时候
-
-        } else if (dyUnconsumed < 0 && dyConsumed < 0) {//状态=离滑动到顶端还有小段距离，小段距离<moveUnit;向下滑动的时候
-            dy = dyUnconsumed;
-        }
-
-        /**
-         * 边界判断
-         */
-        if (currentRv - dy > maxTopContainer) {
-            currentRv = maxTopContainer;
-        } else if (currentRv - dy < 0) {
-            currentRv = 0;
-        } else {
-            currentRv -= dy;
-        }
-
-
-        offsetRv = currentRv - oldRv;
-        rv.offsetTopAndBottom(offsetRv);
-        oldRv = currentRv;
-
-
-        /**
-         * 边界判断
-         */
-        if (currentContainer - dy > maxTopContainer) {
-            currentContainer = maxTopContainer;
-        } else if (currentContainer - dy < 0) {
-            currentContainer = 0;
-        } else {
-            currentContainer -= dy;
-        }
-
-
-        offsetContainer = currentContainer - oldContainer;
-        container.offsetTopAndBottom(offsetContainer);
-        oldContainer = currentContainer;
 
     }
 
@@ -140,6 +89,14 @@ public class MyRelativeLayout extends RelativeLayout {
     @Override
     public void onNestedPreScroll(View target, int dx, int dy, int[] consumed) {
         //rv
+
+        boolean hiddenTop = dy > 0 && getScrollY() < maxTopContainer;
+        boolean showTop = dy < 0 && getScrollY() >= 0 && !ViewCompat.canScrollVertically(target, -1);
+
+        if (hiddenTop || showTop) {
+            scrollBy(0, dy);
+            consumed[1] = dy;
+        }
     }
 
     @Override
@@ -158,13 +115,31 @@ public class MyRelativeLayout extends RelativeLayout {
     }
 
     @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        ViewGroup.LayoutParams lp = rv.getLayoutParams();
+        lp.height = getMeasuredHeight();
+    }
+
+    @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
         container = (RelativeLayout) findViewById(R.id.container);
         rv = (RecyclerView) findViewById(R.id.rv);
         container.measure(MeasureSpec.UNSPECIFIED, MeasureSpec.UNSPECIFIED);
         maxTopContainer = container.getMeasuredHeight();
-        currentContainer = maxTopContainer;
-        oldContainer = maxTopContainer;
+    }
+
+    @Override
+    public void scrollTo(int x, int y) {
+        if (y < 0) {
+            y = 0;
+        }
+        if (y > maxTopContainer) {
+            y = maxTopContainer;
+        }
+        if (y != getScrollY()) {
+            super.scrollTo(x, y);
+        }
     }
 }

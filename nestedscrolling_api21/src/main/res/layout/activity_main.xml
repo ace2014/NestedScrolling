@@ -47,6 +47,16 @@
             android:onClick="click"
             android:text="demo2"
             android:textColor="#aeaeae" />
+
+        <Button
+            android:id="@+id/btn3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="#eeeeee"
+            android:onClick="click"
+            android:text="demo3"
+            android:textColor="#aeaeae" />
     </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>
